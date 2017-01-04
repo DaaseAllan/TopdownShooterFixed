@@ -24,6 +24,9 @@ public class Weapon : MonoBehaviour {
 
 	private float spreadamount;
 	private float bulletsshot;
+	private float Minigunspeed = 1;
+	private float Minigunfirerate;
+	private float MinigunAnimSpd;
 
 	void Awake () {
 		firepoint = transform.FindChild ("FirePoint");
@@ -38,9 +41,11 @@ public class Weapon : MonoBehaviour {
 	void Start()
 	{
 		Del1 = Random.Range (1, 3);
-		Del2 = 3;
+		Del2 = Random.Range(1, 4);
 		Del3 = Random.Range (1, 3);
 		Debug.Log ("del" + Del2);
+
+		if 
 
 		if (Del2 == 1) 
 		{
@@ -63,7 +68,10 @@ public class Weapon : MonoBehaviour {
 		if (Del2 == 3) 
 		{
 			midte2anim.Play ("Midte3Idle");
-			Firerate = 10;
+			Firerate = 1;
+			Minigunfirerate = 2;
+			amountofbullets = 1;
+			bulletspread = 200;
 
 
 		}
@@ -72,6 +80,7 @@ public class Weapon : MonoBehaviour {
 
 	void Update ()
 	{
+		Debug.Log ("Minigunspeed" + Minigunspeed);
 
 		if (Firerate == 0) 
 		{
@@ -99,15 +108,31 @@ public class Weapon : MonoBehaviour {
 		{
 			if (Input.GetButton("Fire1") && Time.time > TimeToFire) 
 			{
+
 				TimeToFire = Time.time + 1/Firerate;
 				ShootBullet (amountofbullets);
 
+				if (Del2 == 3) {
+					midte2anim.Play ("Midte3");
 
+					if (Input.GetButton("Fire1"))
+					{
+						Minigunshot ();
+					} 
+				}
 			}
-
+			if (Input.GetButtonUp ("Fire1")) 
+			{
+				Minigunspeed = 1;
+				Firerate = Minigunfirerate;
+				Debug.Log ("FJERNET");
+			}
 		}
+
+
+
 }
-	void ShootRay() {
+	void SshootRay() {
 		Debug.Log ("Der er skudt");
 		Vector2 mousePosition = new Vector2 (Camera.main.ScreenToWorldPoint (Input.mousePosition).x, Camera.main.ScreenToWorldPoint (Input.mousePosition).y);
 		Vector2 firePointPosition = new Vector2 (firepoint.position.x, firepoint.position.y);
@@ -132,5 +157,13 @@ public class Weapon : MonoBehaviour {
 			BulletPrefab.GetComponent<Rigidbody2D> ().AddRelativeForce (new Vector2 (spreadamount, BulletPrefab.GetComponent<Rigidbody2D>().velocity.y));
 		}
 	
+	}
+	void Minigunshot ()
+	{
+		if (Minigunspeed < 16)
+		{
+			Minigunspeed *= 2;
+			Firerate = Minigunspeed * Minigunfirerate/2;
+		}
 	}
 }

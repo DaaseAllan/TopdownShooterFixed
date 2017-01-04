@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour {
 		}
 		if (Input.GetKey(KeyCode.D)) {
 			rb.velocity = new Vector2 (80, rb.velocity.y);
+			print ("Mmmh");
 
 		}
 
