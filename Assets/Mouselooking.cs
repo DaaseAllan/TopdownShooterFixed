@@ -18,7 +18,6 @@ public class Mouselooking : MonoBehaviour {
 	void Update ()
 	{
 
-		print ("Vi vil have fisse");
 		// Distance from camera to object.  We need this to get the proper calculation.
 		float camDis = cam.transform.position.y - my.position.y;
 
