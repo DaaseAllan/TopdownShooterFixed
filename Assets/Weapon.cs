@@ -70,7 +70,7 @@ public class Weapon : MonoBehaviour {
 			Firerate = 0;
 			SemiFirerate = 1;
 			amountofbullets += 5;
-			bulletspread = 3S00;
+			bulletspread = 300;
 			bulletspeed = 2000;
 			bulletspeeddif = 250;
 
