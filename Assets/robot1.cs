@@ -20,9 +20,12 @@ public class robot1 : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		lengthToPlayer = Vector3.Distance (transform.position, spiller.transform.position);
-		Debug.Log (lengthToPlayer);
+		//Debug.Log ("længde til spiller: " + lengthToPlayer);
 		//starter state 2
-	
+		if (lengthToPlayer < 13) 
+		{
+			state = 2;
+		}
 
 		if (state == 1) 
 		{			
@@ -41,7 +44,6 @@ public class robot1 : MonoBehaviour {
 				retningmodspiller.Normalize ();
 
 				finalretning = retningmodspiller;
-				Debug.Log (finalretning);
 			}
 			if (counter < 1) {
 				GetComponent<Rigidbody2D> ().AddForce (finalretning * speed * Time.deltaTime, ForceMode2D.Impulse);
@@ -64,10 +66,28 @@ public class robot1 : MonoBehaviour {
 		if (state == 2) 
 		{
 			//transform bot
+			Debug.Log("State 2 boi");
+			GetComponent<Rigidbody2D> ().velocity = Vector3.zero;
+			counter += Time.deltaTime;
+			if (counter > 4)
+			{
+				//Spil anim
+
+			}else if (counter < 8)
+			{
+				state = 3;
+			}
+
+
 		}
 		if (state == 3) 
 		{
 			//flækkerbot
+			Debug.Log("state 3 boiii");
+			Vector3 retningmodspiller = spiller.transform.position - transform.position;
+			retningmodspiller.Normalize ();
+			finalretning = retningmodspiller;
+			GetComponent<Rigidbody2D> ().AddForce (finalretning * speed * Time.deltaTime, ForceMode2D.Impulse);
 		}
 	}
 }
