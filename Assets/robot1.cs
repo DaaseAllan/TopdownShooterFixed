@@ -6,6 +6,7 @@ public class robot1 : MonoBehaviour {
 	private GameObject spiller;
 	public float speed;
 	public float randommultiplier;
+	int laststate = 1;
 
 	float lengthToPlayer;
 	float counter;
@@ -18,10 +19,8 @@ public class robot1 : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		lengthToPlayer = Vector3.Distance (transform.position, spiller.transform.position);
-		//Debug.Log ("længde til spiller: " + lengthToPlayer);
-		//starter state 2
 		if (lengthToPlayer < 13) 
 		{
 			state = 2;
@@ -44,6 +43,7 @@ public class robot1 : MonoBehaviour {
 				retningmodspiller.Normalize ();
 
 				finalretning = retningmodspiller;
+				laststate = 1;
 			}
 			if (counter < 1) {
 				GetComponent<Rigidbody2D> ().AddForce (finalretning * speed * Time.deltaTime, ForceMode2D.Impulse);
@@ -66,14 +66,20 @@ public class robot1 : MonoBehaviour {
 		if (state == 2) 
 		{
 			//transform bot
+			//counter reset
+			if (laststate == 1) 
+			{
+				counter = 0;
+			}
 			Debug.Log("State 2 boi");
 			GetComponent<Rigidbody2D> ().velocity = Vector3.zero;
 			counter += Time.deltaTime;
+			laststate = 2;
 			if (counter > 4)
 			{
 				//Spil anim
 
-			}else if (counter < 8)
+			} if (counter > 4)
 			{
 				state = 3;
 			}
@@ -87,7 +93,8 @@ public class robot1 : MonoBehaviour {
 			Vector3 retningmodspiller = spiller.transform.position - transform.position;
 			retningmodspiller.Normalize ();
 			finalretning = retningmodspiller;
-			GetComponent<Rigidbody2D> ().AddForce (finalretning * speed * Time.deltaTime, ForceMode2D.Impulse);
+			GetComponent<Rigidbody2D> ().AddForce (finalretning * speed * 100 * Time.deltaTime, ForceMode2D.Impulse);
+			laststate = 3;
 		}
 	}
 }
