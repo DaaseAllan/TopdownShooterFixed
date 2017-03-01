@@ -71,7 +71,7 @@ public class robot1 : MonoBehaviour {
 			{
 				counter = 0;
 			}
-			Debug.Log("State 2 boi");
+			//Debug.Log("State 2 boi");
 			GetComponent<Rigidbody2D> ().velocity = Vector3.zero;
 			counter += Time.deltaTime;
 			laststate = 2;
@@ -89,12 +89,14 @@ public class robot1 : MonoBehaviour {
 		if (state == 3) 
 		{
 			//flækkerbot
-			Debug.Log("state 3 boiii");
+		//	Debug.Log("state 3 boiii");
 			Vector3 retningmodspiller = spiller.transform.position - transform.position;
 			retningmodspiller.Normalize ();
 			finalretning = retningmodspiller;
 			GetComponent<Rigidbody2D> ().AddForce (finalretning * speed * 100 * Time.deltaTime, ForceMode2D.Impulse);
 			laststate = 3;
 		}
+
+
 	}
 }

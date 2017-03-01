@@ -117,7 +117,7 @@ public class Weapon : MonoBehaviour {
 
 	void Update ()
 	{
-		Debug.Log ("Minigunspeed" + Minigunspeed);
+//		Debug.Log ("Minigunspeed" + Minigunspeed);
 
 		if (Firerate == 0) 
 		{
