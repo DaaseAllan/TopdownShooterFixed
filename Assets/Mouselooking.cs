@@ -29,4 +29,14 @@ public class Mouselooking : MonoBehaviour {
 
 		body.rotation = angle;
 	}
+
+	void OnTriggerEnter(Collider Coll)
+	{
+		Debug.Log (Coll.name);
+
+		if (Coll.tag == "Enemy") 
+		{
+			Debug.Log ("xd");
+		}
+	}
 }

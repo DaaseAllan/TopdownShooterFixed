@@ -7,6 +7,8 @@ public class robot1 : MonoBehaviour {
 	public float speed;
 	public float randommultiplier;
 	int laststate = 1;
+	public float Health;
+
 
 	float lengthToPlayer;
 	float counter;
@@ -97,6 +99,20 @@ public class robot1 : MonoBehaviour {
 			laststate = 3;
 		}
 
+	
+	}
+	void OnTriggerEnter2D(Collider2D Coll)
+	{
+		Debug.Log (Coll.name);
 
+		if (Coll.tag == "Bullet") 
+		{
+			Debug.Log ("ramt");
+			Health -= Coll.GetComponent<Bulletscript> ().Damage;
+			Destroy (Coll.gameObject);
+
+			if (Health <= 0)
+				Destroy (gameObject);
+		}
 	}
 }

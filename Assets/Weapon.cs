@@ -162,7 +162,7 @@ public class Weapon : MonoBehaviour {
 			{
 				Minigunspeed = 1;
 				Firerate = Minigunfirerate;
-				Debug.Log ("FJERNET");
+		
 			}
 		}
 
