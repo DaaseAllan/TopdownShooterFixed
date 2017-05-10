@@ -15,19 +15,33 @@ public class Robot2 : MonoBehaviour {
 	float lengthToPlayer;
 	float counter;
 
+	public GameObject RobotWeapon;
+	public GameObject Player;
+	public GameObject RobotBullet1;
+	public GameObject Firepointobject;
+
+	Transform firepoint;
+
 	Vector3 finalretning;
 
 	// Use this for initialization
+	void Awake () {
+		firepoint = Firepointobject.transform;
+		if (firepoint == null) {
+			Debug.LogError ("FirePoint not found");
+		}
+	}
+
 	void Start () {
 		spiller = GameObject.Find ("Player");
 	}
 
 	void FixedUpdate () 
 	{
+
 		lengthToPlayer = Vector3.Distance (transform.position, spiller.transform.position);
 		if (lengthToPlayer < 13) 
 		{
-			Debug.Log ("Robot 2 er i 13 længde");
 			//state = 2;
 		}
 
@@ -56,15 +70,39 @@ public class Robot2 : MonoBehaviour {
 			}
 			else if(counter > 1) {
 				GetComponent<Rigidbody2D> ().velocity = Vector3.zero;
+
 			}
 
 
 			counter += Time.deltaTime;
 
-			if (counter > 1) 
+			if (counter > 2) 
 			{
 				counter = 0;
 			}
-	}
+				
+	
+			Vector3 vectorToTarget = Player.transform.position - RobotWeapon.transform.position;
+			float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
+			Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+			RobotWeapon.transform.rotation = Quaternion.Slerp(RobotWeapon.transform.rotation, q, Time.deltaTime * 5);
+		
+		
+		}
+
+
 }
+
+	void Update(){
+		ShootBullet();
+	}
+
+	void ShootBullet() {
+		GameObject RobotBulletPrefab = Instantiate (RobotBullet1) as GameObject;
+		RobotBulletPrefab.transform.position = firepoint.transform.position;
+		RobotBulletPrefab.transform.up = firepoint.transform.up;
+		//RobotBulletPrefab.transform.rotation = Quaternion.Euler(new Vector3 (90,90,0));
+		RobotBulletPrefab.GetComponent<Rigidbody2D> ().AddForce (RobotBulletPrefab.transform.right * 1000);
+		RobotBulletPrefab.GetComponent<Rigidbody2D> ().AddRelativeForce (new Vector2 (RobotBulletPrefab.GetComponent<Rigidbody2D>().velocity.x, RobotBulletPrefab.GetComponent<Rigidbody2D>().velocity.y));
+	}
 }

@@ -13,6 +13,8 @@ public class robot1 : MonoBehaviour {
 	float lengthToPlayer;
 	float counter;
 
+	public GameObject RobotWeapon;
+
 	Vector3 finalretning;
 
 	// Use this for initialization
@@ -91,7 +93,6 @@ public class robot1 : MonoBehaviour {
 		if (state == 3) 
 		{
 			//flækkerbot
-		//	Debug.Log("state 3 boiii");
 			Vector3 retningmodspiller = spiller.transform.position - transform.position;
 			retningmodspiller.Normalize ();
 			finalretning = retningmodspiller;
