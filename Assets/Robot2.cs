@@ -38,11 +38,21 @@ public class Robot2 : MonoBehaviour {
 
 	void FixedUpdate () 
 	{
+		//Sigter med våben
+		Vector3 vectorToTarget = Player.transform.position - RobotWeapon.transform.position;
+		float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
+		Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+		RobotWeapon.transform.rotation = Quaternion.Slerp(RobotWeapon.transform.rotation, q, Time.deltaTime * 5);
 
+		//Tjekker state
 		lengthToPlayer = Vector3.Distance (transform.position, spiller.transform.position);
 		if (lengthToPlayer < 13) 
 		{
-			//state = 2;
+			state = 2;
+		}
+
+		else {
+			state = 1;
 		}
 
 
@@ -82,19 +92,29 @@ public class Robot2 : MonoBehaviour {
 			}
 				
 	
-			Vector3 vectorToTarget = Player.transform.position - RobotWeapon.transform.position;
-			float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
-			Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-			RobotWeapon.transform.rotation = Quaternion.Slerp(RobotWeapon.transform.rotation, q, Time.deltaTime * 5);
+
 		
 		
 		}
+		//Shoot state
+		if (state == 2) {
+			GetComponent<Rigidbody2D> ().velocity = Vector3.zero;
+			if (counter == 0) {
+				ShootBullet ();
+			}
+			counter += Time.deltaTime;
+
+			if (counter > 3) {
+				counter = 0;
+			}
+		}
+
+
 
 
 }
 
 	void Update(){
-		ShootBullet();
 	}
 
 	void ShootBullet() {

@@ -35,7 +35,7 @@ public class Weapon : MonoBehaviour {
 	private float newbulletspeed;
 
 	void Awake () {
-		firepoint = transform.FindChild ("FirePoint");
+		firepoint = transform.Find ("FirePoint");
 		if (firepoint == null) {
 			Debug.LogError ("FirePoint not found");
 
