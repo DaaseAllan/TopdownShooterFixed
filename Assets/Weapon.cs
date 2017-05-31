@@ -34,6 +34,10 @@ public class Weapon : MonoBehaviour {
 	private float MinigunAnimSpd;
 	private float newbulletspeed;
 
+	//Crosbowvariabler.
+	private float counter;
+	private bool bowcharged = false;
+
 	void Awake () {
 		firepoint = transform.Find ("FirePoint");
 		if (firepoint == null) {
@@ -47,7 +51,7 @@ public class Weapon : MonoBehaviour {
 	void Start()
 	{
 		Del1 = Random.Range (1, 3);
-		Del2 = Random.Range(1, 4);
+		Del2 = Random.Range(4, 5);
 		Del3 = Random.Range (1, 3);
 		Debug.Log ("del1 blev nummer" + Del1);
 		Debug.Log ("del2 blev nummer" + Del2);
@@ -80,6 +84,15 @@ public class Weapon : MonoBehaviour {
 			midte2anim.Play ("Midte3Idle");
 			Firerate = 1;
 			Minigunfirerate = 2;
+			amountofbullets = 1;
+			bulletspread = 200;
+
+
+		}
+		if (Del2 == 4) 
+		{
+			midte2anim.Play ("Midte4Idle");
+			Firerate = 0;
 			amountofbullets = 1;
 			bulletspread = 200;
 
@@ -118,29 +131,51 @@ public class Weapon : MonoBehaviour {
 	void Update ()
 	{
 //		Debug.Log ("Minigunspeed" + Minigunspeed);
+		if (Firerate == 0) {
 
-		if (Firerate == 0) 
-		{
-			if (Input.GetButtonDown("Fire1")&& Time.time > TimeToFire)
-			{
-				TimeToFire = Time.time + 1/SemiFirerate;
+			if (Del2 == 4) {
 
-				ShootBullet (amountofbullets);
-					Debug.Log (bulletsshot);
+				if (bowcharged == true) {
+					Debug.Log (counter);
+
+					if (counter < 5) {
+						counter += Time.deltaTime;
+					
+
+					}
+					if (Input.GetButtonDown ("Fire1") && bowcharged == false) {
+						bowcharged = true;
+						midte2anim.Play ("Midte4");
+					}
+
+
+					if (Input.GetButtonUp ("Fire1")) {
+						Debug.Log ("Der er skudt");
+						bowcharged = false;
+						counter = 0;
+						midte2anim.Play ("Midte4Idle");
+					}
+
+				} else {
+					if (Input.GetButtonDown ("Fire1") && Time.time > TimeToFire) {
+						TimeToFire = Time.time + 1 / SemiFirerate;
+
+						ShootBullet (amountofbullets);
+						Debug.Log (bulletsshot);
 			
-				if (Del2 == 2) 
-				{
+						if (Del2 == 2) {
 
-					midte2anim.Play ("Midte2");
-					midte2anim.speed = 1;
+							midte2anim.Play ("Midte2");
+							midte2anim.speed = 1;
 
-				} else if (Del2 == 1)
-				{
-					midte2anim.Play ("midte1");
+						} else if (Del2 == 1) {
+							midte2anim.Play ("midte1");
+						}
+					} 
 				}
-			} 
 
-	}
+			}
+		}
 		else 
 		{
 			if (Input.GetButton("Fire1") && Time.time > TimeToFire) 
@@ -164,12 +199,18 @@ public class Weapon : MonoBehaviour {
 				Firerate = Minigunfirerate;
 		
 			}
+
+
+
+
+
 		}
-
-
+			
 
 }
-	void SshootRay() {
+		
+
+	void ShootRay() {
 		Debug.Log ("Der er skudt");
 		Vector2 mousePosition = new Vector2 (Camera.main.ScreenToWorldPoint (Input.mousePosition).x, Camera.main.ScreenToWorldPoint (Input.mousePosition).y);
 		Vector2 firePointPosition = new Vector2 (firepoint.position.x, firepoint.position.y);
