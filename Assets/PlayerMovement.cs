@@ -4,27 +4,36 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour {
 	public Rigidbody2D rb;
 	public GameObject prefab;
+	public float speed = 3000;
 
-	void Update(){
+	void FixedUpdate(){
+
+		Vector2 movement = new Vector2 ();
+
 		if (Input.GetKey(KeyCode.W)) {
-			rb.velocity = new Vector2 (rb.velocity.x, 80);
+			movement.y = speed;
 
 		}
 		if (Input.GetKey(KeyCode.S)) {
-			rb.velocity = new Vector2 (rb.velocity.x, -80);
+			movement.y = -speed;
 
 		}
 		if (Input.GetKey(KeyCode.A)) {
-			rb.velocity = new Vector2 (-80, rb.velocity.y);
+			movement.x = -speed;
 
 		}
 		if (Input.GetKey(KeyCode.D)) {
-			rb.velocity = new Vector2 (80, rb.velocity.y);
+			movement.x = speed;
 //			print ("Mmmh");
 
 		}
+		var t = Time.deltaTime;
+		//if (t>0.03f){t = 0.03f;}
+
+		//rb.GetComponent<Rigidbody2D>().AddForce(movement*Time.deltaTime, f)
 
 
+		rb.velocity = movement*Time.fixedDeltaTime;
 	}
 
 	/*void Fuck()

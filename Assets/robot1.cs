@@ -24,6 +24,8 @@ public class robot1 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+
+		print ("Laurits pls no:"+state);
 		lengthToPlayer = Vector3.Distance (transform.position, spiller.transform.position);
 		if (lengthToPlayer < 13) 
 		{
@@ -93,10 +95,13 @@ public class robot1 : MonoBehaviour {
 		if (state == 3) 
 		{
 			//flækkerbot
-			Vector3 retningmodspiller = spiller.transform.position - transform.position;
+			Vector2 retningmodspiller = spiller.transform.position - transform.position;
 			retningmodspiller.Normalize ();
 			finalretning = retningmodspiller;
-			GetComponent<Rigidbody2D> ().AddForce (finalretning * speed * 100 * Time.deltaTime, ForceMode2D.Impulse);
+			var t = Time.deltaTime;
+			if (t>0.03f){t = 0.03f;}
+			GetComponent<Rigidbody2D> ().velocity = (finalretning * speed * 100 * t);
+
 			laststate = 3;
 		}
 

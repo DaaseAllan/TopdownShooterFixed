@@ -143,17 +143,28 @@ public class Weapon : MonoBehaviour {
 					
 
 					}
-					if (Input.GetButtonDown ("Fire1") && bowcharged == false) {
-						bowcharged = true;
-						midte2anim.Play ("Midte4");
-					}
+				}
+				if (Input.GetButtonDown ("Fire1") && bowcharged == false) {
+					bowcharged = true;
+					midte2anim.Play ("Midte4");
+				}
 
 
-					if (Input.GetButtonUp ("Fire1")) {
-						Debug.Log ("Der er skudt");
-						bowcharged = false;
-						counter = 0;
-						midte2anim.Play ("Midte4Idle");
+				if (Input.GetButtonUp ("Fire1") && counter > 1) {
+					//Bow fyr
+					Debug.Log ("Der er skudt");
+					bulletspeed = counter / 3 * 3000;
+					Debug.Log (bulletspeed);
+					bowcharged = false;
+					counter = 0;
+					ShootBullet (amountofbullets);
+					midte2anim.Play ("Midte4Idle");
+
+				}else if (Input.GetButtonUp ("Fire1") && counter < 1){
+					//Bullet havde ikke nok charge. Add effect senere tak laurits
+					bowcharged = false;
+					counter = 0;
+					midte2anim.Play ("Midte4Idle");
 					}
 
 				} else {
@@ -174,7 +185,7 @@ public class Weapon : MonoBehaviour {
 					} 
 				}
 
-			}
+
 		}
 		else 
 		{
