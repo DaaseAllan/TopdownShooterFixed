@@ -10,6 +10,8 @@ public class CameraFollow2 : MonoBehaviour {
 
 	private Vector3 LastPos;
 
+	public float smoothing;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -24,7 +26,7 @@ public class CameraFollow2 : MonoBehaviour {
 
 		LastPos.z = -10;
 
-		transform.position = Vector3.Lerp(transform.position, LastPos, Time.fixedDeltaTime);
+		transform.position = Vector3.Lerp(transform.position, LastPos, Time.fixedDeltaTime*smoothing);
 
 		LastPos = player.transform.position;
 	}
