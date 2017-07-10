@@ -51,7 +51,7 @@ public class Weapon : MonoBehaviour {
 	void Start()
 	{
 		Del1 = Random.Range (1, 3);
-		Del2 = Random.Range(4, 5);
+		Del2 = Random.Range(1, 5);
 		Del3 = Random.Range (1, 3);
 		Debug.Log ("del1 blev nummer" + Del1);
 		Debug.Log ("del2 blev nummer" + Del2);
